@@ -16,9 +16,15 @@ try {
     // usando-pdo/?email=prueba@prueba.com
     // usando-pdo/?email=' or '1'='1
     $email = $_GET['email'];
+
+    // Query a ejecutar
     $statement = $conexionDB->prepare("SELECT * FROM usuarios WHERE email = :email");
-    $statement->bindParam(':email', $email);
-    $statement->execute();
+
+    // Array asociativo con todos los parámetros
+    $parametros = [':email' => $email];
+
+    // Ejecute el query usando los parámetros enviados
+    $statement->execute($parametros);
 
     while($row = $statement->fetch()) {
         echo($row['email']);
