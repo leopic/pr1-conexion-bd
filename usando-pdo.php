@@ -1,10 +1,22 @@
 <?php
 
-// Informacion sobre la conexion a la BD
+/**
+ * usando-pdo.php
+ * Forma recomendada de interactuar con la BD.
+ */
+
+/**
+ * Información sobre la conexión a la BD.
+ * Esto no debería vivir en el repositorio.
+ */
 $host = "localhost";
-$user = "root";
-$pass = "root";
-$dbname = "pr1";
+$user = "pr1usuario";
+$pass = "pr1password";
+$dbname = "pr1db";
+
+// Ejemplos
+// usando-pdo/?email=prueba@prueba.com
+// usando-pdo/?email=' or '1'='1
 
 try {
     // Abriendo la conexión
@@ -13,30 +25,26 @@ try {
     // Informenos de todos los errores
     $conexionDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // usando-pdo/?email=prueba@prueba.com
-    // usando-pdo/?email=' or '1'='1
+    // Obtenemos el valor del parametro email
     $email = $_GET['email'];
 
     // Query a ejecutar
-    $statement = $conexionDB->prepare("SELECT * FROM usuarios WHERE email = :email");
+    $sentencia = $conexionDB->prepare("SELECT * FROM usuarios WHERE email = :email");
 
-    // Array asociativo con todos los parámetros
+    // Creamos un diccionario con todos los parámetros
     $parametros = [':email' => $email];
 
     // Ejecute el query usando los parámetros enviados
-    $statement->execute($parametros);
+    $sentencia->execute($parametros);
 
-    while($row = $statement->fetch()) {
-        echo($row['email']);
+    // Iteramos sobre cada uno de los resultados de la siguiente manera
+    while ($tupla = $sentencia->fetch()) {
+        echo("Correo: " . $tupla['email']);
     }
 
-    // Cerrando la conexión
+    // Debemos cerrar la conexión cuando terminamos
     $conexionDB = null;
 } catch (PDOException $e) {
-    echo $e->getMessage();
+    // En caso de que algo saliera mal con nuestro intento de conexión, el mensaje se imprime
+    echo($e->getMessage());
 }
-
-// Usuario ejecutando la petición
-//echo exec('whoami');
-//print posix_getpwuid(posix_geteuid())['name'];
-//error_log(print_r($row, true) . "\n", 3, '/Users/leo/Sites/pr1/repos/pr1-conexion-bd/error.log');
