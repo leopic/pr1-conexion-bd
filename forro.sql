@@ -26,6 +26,18 @@ CREATE TABLE usuarios(
   PRIMARY KEY (id)
 );
 
+# Modificamos la tabla para agregar dos columnas mas
+ALTER TABLE usuarios ADD (
+  nombre VARCHAR(50),
+  apellido VARCHAR(50)
+);
+
+# Agregamos un indice a la tabla
+ALTER TABLE usuarios ADD INDEX email (email);
+
+# Eliminamos la columna apellido de nuestra tabla
+ALTER TABLE usuarios DROP COLUMN apellido;
+
 # Verificamos la estructura de la tabla
 DESC usuarios;
 
