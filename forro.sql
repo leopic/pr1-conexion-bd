@@ -57,12 +57,12 @@ SELECT id, email FROM usuarios LIMIT 5;
 SELECT id, email FROM usuarios LIMIT 5 OFFSET 5;
 
 # Creacion
-# Ingresamos un segundo usuario
-INSERT INTO usuarios (email, password) VALUES ('prueba@prueba.com', '123queso');
+# Insertamos dos usuarios más
+INSERT INTO usuarios (email, password) VALUES ('mi@prueba.com', '123queso'), ('otra@prueba', 'otropassword');
 
 # Edicion
 # Modificamos el correo del segundo usuario
-UPDATE usuarios SET email = 'prueba@correodeprueba.com' WHERE email = 'prueba@prueba.com';
+UPDATE usuarios SET email = 'prueba@correodeprueba.com' WHERE email = 'mi@prueba.com';
 
 # Borrado
 # Eliminamos ese segundo usuario
